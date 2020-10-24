@@ -33,12 +33,13 @@ pipeline {
         stage('Deliver') { 
             agent any
             environment { 
-                VOLUME = "${env.BUILD_URL}sources:/src"
+                VOLUME = '$(pwd)/sources:/src'
                 IMAGE = 'cdrx/pyinstaller-linux:python2'
             }
             steps {
                 dir(path: env.BUILD_ID) { 
                     unstash(name: 'compiled-results') 
+                    echo "Curren dir is $(pwd)"
                     echo "Current workspace is ${env.WORKSPACE}"
                     sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'" 
                 }
