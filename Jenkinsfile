@@ -39,7 +39,7 @@ pipeline {
             steps {
                 dir(path: env.BUILD_ID) { 
                     unstash(name: 'compiled-results') 
-                    echo "$pwd"
+                    echo "Current workspace is ${env.WORKSPACE}"
                     sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'" 
                 }
             }
